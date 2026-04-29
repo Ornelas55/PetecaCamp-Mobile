@@ -1,98 +1,97 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import React from 'react';
+import { StyleSheet, Text, View, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.headerContent}>
+          <View style={styles.logoBox}>
+             <MaterialIcons name="emoji-events" size={24} color="#FFF"/>
+          </View>
+          <View>
+            <Text style={styles.headerTitle}>PETECA CUP</Text>
+            <Text style={styles.headerSub}>GESTOR DE TORNEIO</Text>
+          </View>
+        </View>
+      </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      <ScrollView style={styles.content}>
+        <View style={styles.topRow}>
+          <Text style={styles.sectionTitle}>MEUS TORNEIOS</Text>
+          <TouchableOpacity style={styles.btnNovo}>
+            <Text style={styles.btnNovoText}>+ NOVO</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.card}>
+          <View style={styles.statusRow}>
+            <View style={styles.statusDot} />
+            <Text style={styles.statusText}>EM ANDAMENTO</Text>
+          </View>
+          
+          <Text style={styles.tournamentName}>COPA DE VERÃO</Text>
+          
+          <View style={styles.infoRow}>
+            <Text style={styles.infoText}>📍 Quadra do cambalacho</Text>
+            <Text style={styles.infoText}>👥 6 duplas</Text>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: { flex: 1, backgroundColor: '#F2F2F2' },
+  header: { 
+    backgroundColor: '#FFF', 
+    paddingTop: 50, 
+    paddingBottom: 20, 
+    borderBottomWidth: 1, 
+    borderBottomColor: '#EEE',
+    paddingHorizontal: 20 
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  headerContent: { flexDirection: 'row', alignItems: 'center' },
+  logoBox: { 
+    backgroundColor: '#00A382', 
+    padding: 8, 
+    borderRadius: 8, 
+    marginRight: 12, 
+    justifyContent: 'center',
+    alignItems: 'center'
+
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  logoEmoji: { fontSize: 20 },
+  headerTitle: { fontSize: 18, fontWeight: 'bold', color: '#333' },
+  headerSub: { fontSize: 10, color: '#666', letterSpacing: 1 },
+  content: { flex: 1, padding: 20 },
+  topRow: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    marginBottom: 20 
   },
+  sectionTitle: { fontSize: 12, color: '#666', fontWeight: 'bold' },
+  btnNovo: { 
+    backgroundColor: '#00A382', 
+    paddingVertical: 10, 
+    paddingHorizontal: 20, 
+    borderRadius: 8 
+  },
+  btnNovoText: { color: '#FFF', fontWeight: 'bold', fontSize: 14 },
+  card: { 
+    backgroundColor: '#FFF', 
+    borderRadius: 12, 
+    padding: 20, 
+    borderWidth: 1, 
+    borderColor: '#DDD'
+  },
+  statusRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
+  statusDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#F4A460', marginRight: 6 },
+  statusText: { fontSize: 12, color: '#F4A460', fontWeight: 'bold' },
+  tournamentName: { fontSize: 22, fontWeight: 'bold', color: '#333', marginBottom: 12 },
+  infoRow: { flexDirection: 'row', justifyContent: 'space-between' },
+  infoText: { fontSize: 13, color: '#888' }
 });
